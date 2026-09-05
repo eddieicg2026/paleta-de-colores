@@ -54,7 +54,7 @@ Este proyecto es una aplicación web estática e interactiva que permite generar
 
 ## Autor
 
-Eddie - Desarrollador en formación en apx
+ei,cg - Desarrollador en formación 
 
 ---
 
