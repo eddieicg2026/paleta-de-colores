@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Paletas de Colores</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #222;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        label, select, button {
+            font-size: 1.1rem;
+            margin: 10px 5px;
+        }
+
+        select {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #888;
+            outline-offset: 2px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px #4a90e2;
+        }
+
+        button {
+            background-color: #4a90e2;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(74,144,226,0.4);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover, button:focus {
+            background-color: #357ABD;
+            box-shadow: 0 6px 12px rgba(53,122,189,0.6);
+            outline: none;
+        }
+
+        .palette {
+            margin-top: 25px;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 110px;
+            height: 110px;
+            margin: 8px;
+            border-radius: 12px;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            color: white;
+            font-weight: 700;
+            line-height: 110px;
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: 0 0 5px rgba(0,0,0,0.7);
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Paletas de Colores</h1>
+    <label for="size">Selecciona el tamaño de la paleta:</label>
+    <select id="size">
+        <option value="6">6 colores</option>
+        <option value="8">8 colores</option>
+        <option value="9">9 colores</option>
+    </select>
+    <button id="generate">Generar paleta</button>
+    <div class="palette" id="palette"></div>
+
+    <script>
+        const generateButton = document.getElementById('generate');
+        const paletteDiv = document.getElementById('palette');
+        const sizeSelect = document.getElementById('size');
+        let blockedColors = [];
+
+        generateButton.addEventListener('click', () => {
+            const size = parseInt(sizeSelect.value);
+            paletteDiv.innerHTML = ''; // Limpiar paleta anterior
+
+            for (let i = 0; i < size; i++) {
+                let color;
+                do {
+                    color = getRandomColor();
+                } while (blockedColors.includes(color)); // Bloquear colores repetidos
+                blockedColors.push(color);
+                createColorBox(color);
+            }
+            localStorage.setItem('palette', JSON.stringify(blockedColors)); // Guardar en localStorage
+        });
+
+        function createColorBox(color) {
+            const colorBox = document.createElement('div');
+            colorBox.className = 'color-box';
+            colorBox.style.backgroundColor = color;
+            colorBox.innerText = color; // Mostrar el código del color
+            colorBox.addEventListener('click', () => {
+                navigator.clipboard.writeText(color); // Copiar al portapapeles
+                alert(`Código ${color} copiado al portapapeles!`); // Microfeedback
+            });
+            paletteDiv.appendChild(colorBox);
+        }
+
+        function getRandomColor() {
+            const randomHSL = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+            return randomHSL; // Cambia a HEX o RGBA si querés
+        }
+    </script>
+</body>
+</html>
