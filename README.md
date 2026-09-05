@@ -54,7 +54,7 @@ Este proyecto es una aplicación web estática e interactiva que permite generar
 
 ## Autor
 
-ei,cg - Desarrollador en formación 
+ei,cg - desarrollador en formación - cohorte webft79
 
 ---
 
