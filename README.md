@@ -56,6 +56,4 @@ Este proyecto es una aplicación web estática e interactiva que permite generar
 
 ei,cg - desarrollador en formación - cohorte webft79
 
----
 
-¡Divertite creando paletas y jugando con colores! 🎨🚀
